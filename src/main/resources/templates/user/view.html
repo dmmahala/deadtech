@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <h1 th:text="${title}">Default Title</h1>
+
+    <span th:if="${user.admin.equals(true)}">(Admin)</span>
+
+    <span th:unless="${user.admin.equals(true)}">
+        <span th:if="${admin}">
+            <form method="post" action="/user/promote">
+                <input type="hidden" id="userId" name="userId" th:value="${user.id}" />
+                <input type="submit" value="Promote to Administrator" class="btn btn-warning" />
+            </form>
+        </span>
+    </span>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <div class="container col-lg-12">
+        <div class="row">
+            <div class="page-header">
+                <h1 th:text="${title}">Default Title</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <span th:if="${product.pending.equals(true)}">(Pending approval)</span>
+
+                <span th:if="${product.pending.equals(true)}">
+                    <span th:if="${admin}">
+                        <form method="post" action="/product/approve">
+                            <input type="hidden" id="productId" name="productId" th:value="${product.id}" />
+                            <input type="submit" value="Approve Addition" class="btn btn-success btn-sm" />
+                        </form>
+                    </span>
+                </span>
+
+                <p>Manufacturer: <span><a th:href="'/manufacturer/view/' + ${manufacturer.id}" th:text="${manufacturer.name}"></a></span></p>
+
+                <p>Model Number: <span th:text="${product.modelNumber}"></span></p>
+
+                <p>Description: <span th:text="${product.description}"></span></p>
+            </div>
+
+                <img th:src="${product.imageUrl}" class="pull-right" />
+        </div>
+    </div>
+
+    <nav th:replace="fragments :: productNav"></nav>
+
+</body>
+</html>

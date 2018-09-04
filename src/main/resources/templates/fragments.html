@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <title th:text="${title}">Default Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        img {
+            width:33%;
+        }
+        .footer {
+            bottom: 0;
+            left: 0;
+            position: fixed;
+            right: 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav th:fragment="navigation">
+        <span th:unless="${session.containsKey('user')}"><a href="/user/login" class="btn btn-outline-info btn-sm">Login</a> |</span>
+        <span th:unless="${session.containsKey('user')}"><a href="/user/new_user" class="btn btn-outline-info btn-sm">Sign Up</a> |</span>
+        <span th:if="${session.containsKey('user')}">Hello, <a th:href="'/user/view/' + ${session.user.id}" th:text="${session.user.name}"></a><span th:if="${session.user.admin}">(Admin)</span> </span>
+        <span th:if="${session.containsKey('user')}"><a href="/user/logout" class="btn btn-danger btn-sm">Logout</a> |</span>
+        <a href="/user" class="btn btn-outline-info btn-sm">Users</a> |
+        <a href="/manufacturer" class="btn btn-outline-info btn-sm">Manufacturers</a> |
+        <a href="/product" class="btn btn-outline-info btn-sm">Products</a>
+
+    </nav>
+
+    <nav th:fragment="userNav" class="footer">
+        <a href="/user/login" class="btn btn-outline-info btn-sm">Login</a> |
+        <a href="/user/new_user" class="btn btn-outline-info btn-sm">Sign Up</a>
+    </nav>
+
+    <nav th:fragment="manufacturerNav" class="footer">
+        <a href="/manufacturer" class="btn btn-info btn-sm">View Manufacturers</a>
+        <a href="/manufacturer/add" class="btn btn-info btn-sm">Add New Manufacturer</a>
+    </nav>
+
+    <nav th:fragment="productNav" class="footer">
+        <a href="/product" class="btn btn-info btn-sm">View Products</a>
+        <a href="/product/add" class="btn btn-info btn-sm">Add New Product</a>
+    </nav>
+
+</body>
+</html>

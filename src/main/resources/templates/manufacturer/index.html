@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <h1 th:text="${title}">Default Title</h1>
+
+    <span th:if="${adminError}" th:text="${adminError}" class="error"></span>
+
+
+    <p th:unless="${manufacturers} and ${manufacturers.size()}">No Manufacturers</p>
+
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+        <tr th:each="manufacturer : ${manufacturers}">
+            <td><a th:href="'manufacturer/view/' + ${manufacturer.id}" th:text="${manufacturer.name}"></a></td>
+            <td th:text="${manufacturer.description}"></td>
+        </tr>
+    </table>
+
+    <nav>
+        <a href="/manufacturer/add" class="btn btn-primary">Add New Manufacturer</a>
+    </nav>
+
+</body>
+</html>

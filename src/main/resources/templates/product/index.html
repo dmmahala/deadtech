@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <h1 th:text="${title}">Default Title</h1>
+
+
+    <p th:unless="${products} and ${products.size()}">No Products</p>
+
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Manufacturer</th>
+        </tr>
+        <tr th:each="product : ${products}">
+            <td><a th:href="'product/view/' + ${product.id}" th:text="${product.name}"></a></td>
+            <td th:text="${product.description}"></td>
+            <td><a th:href="'manufacturer/view/' + ${product.manufacturer.id}" th:text="${product.manufacturer.name}"></a></td>
+        </tr>
+    </table>
+
+    <nav>
+        <a href="/product/add" class="btn btn-primary">Add New Product</a>
+    </nav>
+
+</body>
+</html>

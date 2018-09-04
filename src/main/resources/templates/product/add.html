@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body class="container">
+
+    <nav th:replace="fragments :: navigation"></nav>
+
+    <h1 th:text="${title}">Default Title</h1>
+
+    <form method="post" style="max-width:600px;" th:object="${product}">
+        <div class="form-group">
+            <label th:for="name">Name</label>
+            <input class="form-control" th:field="*{name}" />
+            <span th:errors="*{name}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label th:for="modelNumber">Model Number</label>
+            <input class="form-control" th:field="*{modelNumber}" />
+            <span th:errors="*{modelNumber}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label th:for="manufacturer">Manufacturer</label>
+            <select name="manufacturerId">
+                <option th:each="manufacturer : ${manufacturers}"
+                        th:text="${manufacturer.name}"
+                        th:value="${manufacturer.id}"></option>
+            </select>
+            <span th:errors="*{manufacturer}" class="error"></span>
+        </div>
+        <div class="form-group">
+            <label th:for="description">Description</label>
+            <textarea class="form-control" th:field="*{description}"></textarea>
+        </div>
+        <div class="form-group">
+            <label th:for="imageUrl">Image URL</label>
+            <input type="text" th:field="*{imageUrl}" />
+        </div>
+
+        <input type="submit" value="Add Product" class="btn btn-success" />
+    </form>
+
+    <nav class="footer">
+        <a href="/product" class="btn btn-info btn-sm">View Products</a>
+    </nav>
+
+</body>
+</html>

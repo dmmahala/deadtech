@@ -1,0 +1,9 @@
+.container {
+  width: 10%;
+  border: dashed blue 1px;
+}
+
+.container img {
+  max-height:100%;
+  max-width: 100%;
+}
