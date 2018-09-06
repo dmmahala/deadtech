@@ -2,6 +2,9 @@ package com.deadtech.deadtech.controllers;
 
 import com.deadtech.deadtech.models.User;
 import com.deadtech.deadtech.models.data.UserDao;
+import com.mongodb.MongoClientURI;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +19,12 @@ import java.util.List;
 @Controller
 @RequestMapping("user")
 public class UserController {
+
+    private MongoClientURI uri = new MongoClientURI(
+            "mongodb+srv://dmmahala:<PASSWORD>@deadtech-eirhc.gcp.mongodb.net/test?retryWrites=true");
+
+    private MongoClient mongoClient = new MongoClient(uri);
+    private MongoDatabase database = mongoClient.getDatabase("DeadTech");
 
     @Autowired
     private UserDao userDao;

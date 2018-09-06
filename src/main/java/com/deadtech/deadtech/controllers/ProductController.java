@@ -5,6 +5,9 @@ import com.deadtech.deadtech.models.Product;
 import com.deadtech.deadtech.models.User;
 import com.deadtech.deadtech.models.data.ManufacturerDao;
 import com.deadtech.deadtech.models.data.ProductDao;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +21,12 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping(value = "product")
 public class ProductController {
+
+    private MongoClientURI uri = new MongoClientURI(
+            "mongodb+srv://dmmahala:<PASSWORD>@deadtech-eirhc.gcp.mongodb.net/test?retryWrites=true");
+
+    private MongoClient mongoClient = new MongoClient(uri);
+    private MongoDatabase database = mongoClient.getDatabase("DeadTech");
 
     @Autowired
     private ProductDao productDao;
