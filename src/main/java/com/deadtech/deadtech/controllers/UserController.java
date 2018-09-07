@@ -2,9 +2,12 @@ package com.deadtech.deadtech.controllers;
 
 import com.deadtech.deadtech.models.User;
 import com.deadtech.deadtech.models.data.UserDao;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,15 +19,24 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+
 @Controller
 @RequestMapping("user")
 public class UserController {
 
+    private CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
+            fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+
     private MongoClientURI uri = new MongoClientURI(
             "mongodb+srv://dmmahala:<PASSWORD>@deadtech-eirhc.gcp.mongodb.net/test?retryWrites=true");
 
-    private MongoClient mongoClient = new MongoClient(uri);
+    private MongoClient mongoClient = new MongoClient("uri", MongoClientOptions.builder().codecRegistry(pojoCodecRegistry).build());
     private MongoDatabase database = mongoClient.getDatabase("DeadTech");
+
+
+
 
     @Autowired
     private UserDao userDao;
@@ -103,7 +115,7 @@ public class UserController {
             return "user/new";
         }
 
-        userDao.save(newUser);
+
         httpSession.setAttribute("user", newUser);
 
         return "redirect:/user/view/" + newUser.getId();
